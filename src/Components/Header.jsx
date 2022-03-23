@@ -1,15 +1,45 @@
 import {Navbar, Container, Nav, NavDropdown} from 'react-bootstrap';
+import Logo from '../Style/images/doc.png'
+import { useEffect, useState } from 'react';
+
 
 function Header() {
+
+    const [authenticated, setAuthenticated] = useState(false);
+
+    useEffect(() => {
+        let token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (token) {
+            setAuthenticated(true);
+        }
+    }, []);
+
+
     return(
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                <Navbar.Brand href="/">
+                    <img
+                     src={Logo}
+                     width="40"
+                     height="40"                    
+                     >
+                    </img>
+                    Sistema Médico</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
+                </Nav>
+                <Nav>
+                    {!authenticated ? 
+                        <Nav.Link eventkey={2} href="/login">
+                            Login
+                        </Nav.Link> : 
+
+                        <Nav.Link eventkey={2} href="/login">
+                            Cerrar Sesión
+                        </Nav.Link>
+                    }
                 </Nav>
                 </Navbar.Collapse>
             </Container>
