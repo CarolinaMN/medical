@@ -3,6 +3,7 @@ import {Form, Button, Container, Row, Col} from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AxiosInterceptor from '../axios.interceptor';
 
 function Login() {
 
@@ -20,7 +21,7 @@ function Login() {
             "rememberMe": rememberMe
         }
 
-        axios.post('/api/authenticate', data).then(res => {
+        AxiosInterceptor.post('/api/authenticate', data).then(res => {
 
             if (rememberMe === true) {
                 localStorage.setItem('token', res.data.id_token);

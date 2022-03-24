@@ -1,18 +1,27 @@
 import {Navbar, Container, Nav, NavDropdown} from 'react-bootstrap';
 import Logo from '../Style/images/doc.png'
 import { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
 
     const [authenticated, setAuthenticated] = useState(false);
+
+    const navagate = useNavigate();
+
 
     useEffect(() => {
         let token = localStorage.getItem('token') || sessionStorage.getItem('token');
         if (token) {
             setAuthenticated(true);
         }
-    }, []);
+    }, [authenticated]);
+
+    const close = () => {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        navagate('/');
+    }
 
 
     return(
@@ -36,7 +45,7 @@ function Header() {
                             Login
                         </Nav.Link> : 
 
-                        <Nav.Link eventkey={2} href="/login">
+                        <Nav.Link eventkey={2} onClick={close}>
                             Cerrar Sesión
                         </Nav.Link>
                     }
