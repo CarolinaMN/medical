@@ -1,9 +1,10 @@
 import React from 'react';
 import {Form, Button, Container, Row, Col} from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AxiosInterceptor from '../axios.interceptor';
+import { Context } from '../Context';
 
 function Login() {
 
@@ -12,6 +13,7 @@ function Login() {
     const [rememberMe, setRememberMe] = useState(false);
 
     const navegate = useNavigate();
+    const context = useContext(Context);
     
     const login = (event) => {
         event.preventDefault();
@@ -28,6 +30,7 @@ function Login() {
             } else {
                 sessionStorage.setItem('token', res.data.id_token);
             }
+            context.setAuthenticated(true);
             navegate('/');
         }).catch(error => {
             console.log("Error");
